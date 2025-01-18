@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.ua_map),
+    path('create/', views.create),
 ]
