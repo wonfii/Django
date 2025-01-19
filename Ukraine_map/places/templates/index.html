@@ -30,40 +30,40 @@
 </head>
 <body>
 
-    <div class="card fixed-top" style="width: 18rem;">
+    <div class="card fixed-top" style="width: 12rem;">
         <div class="card-body">
           <a class="card-title" href="/"><i class="bi bi-geo-alt-fill"></i>Map</a><hr>
-          <a class="card-link"href="create/">Add Marker</a>
+          <a type="button" class="btn btn-outline-secondary" href="create/">New Marker</a><hr>
         </div>
     </div>
 
     <div id="map"></div>
 
-    
-
     {% if places|length > 0 %}
         <script>
             var map = L.map('map').setView([48.3794, 31.1656], 6);
         
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(map);
         </script>
 
         {% for place in places %}
 
-        <script>
-            var marker = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map);
-            marker.bindPopup("<b>{{ place.name }}</b><br>{{ place.location }}");
-        </script>
+            <script>
+                
+                var marker = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map);
+                marker.bindPopup("<b>{{ place.name }}</b><br>{{ place.location }}<br>");
+            </script>
         {% endfor %}
-    {% else %}
-        document.write('<p>No places available</p>');
+
+        {% else %}
+            document.write('<p>No places available</p>');
+
     {% endif %}
         
     
 </body>
-
 </html>
 
