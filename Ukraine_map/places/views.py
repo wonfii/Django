@@ -20,13 +20,13 @@ def create(request):
     
     return render(request, 'create.html', {'form': form})
 
-def delete(request, name):
-    place = get_object_or_404(Place, name=name)
+def delete(request, id):
+    place = get_object_or_404(Place, id=id)
     place.delete()
     return redirect('/')
 
-def edit(request, name):
-    place = get_object_or_404(Place, name=name)
+def edit(request, id):
+    place = get_object_or_404(Place, id=id)
     if request.method == "POST":
         form = PlaceForm(request.POST, instance=place)
         if form.is_valid():
@@ -35,6 +35,4 @@ def edit(request, name):
             return redirect('/')  
     else:
         form = PlaceForm(instance=place)
-        return render(request, 'edit.html', {'form': form})
-    
-    return render(request, 'edit.html', {'form': form})
+        return render(request, 'edit.html', {'form': form, 'place': place})

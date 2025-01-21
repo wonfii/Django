@@ -30,12 +30,13 @@
 </head>
 <body>
 
-    <div class="card fixed-top" style="width: 12rem;">
-        <div class="card-body">
-          <a class="card-title" href="/"><i class="bi bi-geo-alt-fill"></i>Map</a><hr>
-          <a type="button" class="btn btn-outline-secondary" href="create/">New Marker</a><hr>
-        </div>
-    </div>
+
+    <div class="floating-btn">
+        <a type="button" class="btn btn-outline-secondary" href="create/">
+            <i class="bi bi-plus-circle"></i>
+        </a>
+    </div>    
+
 
     <div id="map"></div>
 
@@ -50,13 +51,28 @@
         </script>
 
         {% for place in places %}
+        <script>
+            var marker = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map);
+            
+            marker.bindPopup("<b>{{ place.name }}</b><br>{{ place.location }}<br>");
+            
+            marker.on('mouseover', function() {
+                this.openPopup();  
+            });
 
-            <script>
-                
-                var marker = L.marker([{{ place.latitude }}, {{ place.longitude }}]).addTo(map);
-                marker.bindPopup("<b>{{ place.name }}</b><br>{{ place.location }}<br>");
-            </script>
+            marker.on('mouseout', function() {
+                this.closePopup(); 
+            });
+
+            marker.on('click', function() {
+                setTimeout(function() {
+                    window.location.href = `/edit/{{ place.id }}/`;
+                }, 100);
+            });
+
+        </script>
         {% endfor %}
+
 
         {% else %}
             document.write('<p>No places available</p>');
