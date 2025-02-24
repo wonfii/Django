@@ -48,6 +48,15 @@
                 maxZoom: 19,
                 attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }).addTo(map);
+
+            map.on('click', function(e) {
+                var lat = e.latlng.lat;
+                var lng = e.latlng.lng;
+                console.log("Clicked on map at:", lat, lng);
+                
+                window.location.href = `/add/?lat=${lat}&lng=${lng}`;
+            });
+
         </script>
 
         {% for place in places %}

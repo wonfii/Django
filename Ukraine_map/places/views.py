@@ -36,3 +36,18 @@ def edit(request, id):
     else:
         form = PlaceForm(instance=place)
         return render(request, 'edit.html', {'form': form, 'place': place})
+    
+def add(request):
+    if request.method == "POST":
+        form = PlaceForm(request.POST)
+        if form.is_valid():
+            place = form.save(commit=False)
+            place.save()
+            return redirect('/')  
+    else:
+        lat = request.GET.get('lat', '')  
+        lng = request.GET.get('lng', '')
+
+        form = PlaceForm(initial={'latitude': lat, 'longitude': lng}) 
+
+    return render(request, 'add.html', {'form': form, 'lat': lat, 'lng': lng})
